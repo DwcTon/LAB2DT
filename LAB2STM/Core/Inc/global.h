@@ -8,6 +8,7 @@
 #ifndef INC_GLOBAL_H_
 #define INC_GLOBAL_H_
 
+#define	INIT	4
 #define SEG0	0
 #define SEG1	1
 #define SEG2	2

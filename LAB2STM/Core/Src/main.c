@@ -92,18 +92,82 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
+  setTimer1(250);
+  setTimer2(1000);
+  setTimer3(2000);
+  TIME_7SEG = 250;
+//  updateClockBuffer();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  // Initial
-  setTimer1(100);
-  setTimer2(25);
-  updateClockBuffer();
   while (1)
   {
     /* USER CODE END WHILE */
+	if (second >= 60) {
+		second = 0;
+		minute++;
+	}
+	if (minute >= 60) {
+		minute = 0;
+		hour++;
+	}
+	if (hour >= 24) {
+		hour = 0;
+	}
+	updateClockBuffer();
 
+	switch (status) {
+	case INIT:
+		if (timer1_flag == 1) {
+			status = SEG0;
+			setTimer1(TIME_7SEG);
+		}
+		break;
+	case SEG0:
+		update7SEG(status);
+		if (timer1_flag == 1) {
+			status = SEG1;
+			setTimer1(TIME_7SEG);
+		}
+		break;
+	case SEG1:
+		update7SEG(status);
+		if (timer1_flag == 1) {
+			status = SEG2;
+			setTimer1(TIME_7SEG);
+		}
+		break;
+	case SEG2:
+		update7SEG(status);
+		if (timer1_flag == 1) {
+			status = SEG3;
+			setTimer1(TIME_7SEG);
+		}
+		break;
+	case SEG3:
+		update7SEG(status);
+		if (timer1_flag == 1) {
+			status = SEG0;
+			setTimer1(TIME_7SEG);
+		}
+		break;
+	default:
+		break;
+	}
+
+	// LED PA5 toggle independently
+	if (timer2_flag == 1) {
+		second++;
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		setTimer2(1000);
+	}
+
+	// LED DOT blink every 2 seconds
+	if (timer3_flag == 1) {
+		setTimer3(2000);
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
+	}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -232,7 +296,9 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-	timerRun();
+	timerRun1();
+	timerRun2();
+	timerRun3();
 }
 /* USER CODE END 4 */
 
