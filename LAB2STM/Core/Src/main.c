@@ -22,8 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "display7seg.h"
+#include "global.h"
 #include "software_timer.h"
-#include "multiLED.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,46 +96,60 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-//	Initial for two timer
+  // Initial
   setTimer1(50);
   setTimer2(100);
-
-//	Initial for two 7-segment LED
-  int led0 = 1;
-  int led1 = 2;
-
-//	Initial for the status of the LED
-  int status = 0;
+  setTimer3(200);
   while (1)
   {
     /* USER CODE END WHILE */
 	switch (status) {
-	case 0:
-		//	Enable led 0 and disable led 1
-		HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_SET);
-		display7SEG(led0);
+	case SEG0:
+		display7SEG(1);
+		setEnableSignal(status);
 		if (timer1_flag == 1) {
 			setTimer1(50);
-			status = 1;
+			status = SEG1;
 		}
 		break;
-	case 1:
-		//	Enable led 1 and disable led 0
-		HAL_GPIO_WritePin(EN0_GPIO_Port, EN0_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(EN1_GPIO_Port, EN1_Pin, GPIO_PIN_RESET);
-		display7SEG(led1);
+	case SEG1:
+		display7SEG(2);
+		setEnableSignal(status);
 		if (timer1_flag == 1) {
 			setTimer1(50);
-			status = 0;
+			status = SEG2;
+		}
+		break;
+	case SEG2:
+		display7SEG(3);
+		setEnableSignal(status);
+		if (timer1_flag == 1) {
+			setTimer1(50);
+			status = SEG3;
+		}
+		break;
+	case SEG3:
+		display7SEG(0);
+		setEnableSignal(status);
+		if (timer1_flag == 1) {
+			setTimer1(50);
+			status = SEG0;
 		}
 		break;
 	default:
 		break;
 	}
-	if (timer2_flag) {
+
+	// LED PA5 toggle independently
+	if (timer2_flag == 1) {
 		setTimer2(100);
 		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+	}
+
+	// LED DOT blink every 2 seconds
+	if (timer3_flag == 1) {
+		setTimer3(200);
+		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	}
     /* USER CODE BEGIN 3 */
   }
@@ -235,23 +250,26 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin|EN0_Pin|EN1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+                          |EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, SEGa_Pin|SEGb_Pin|SEGc_Pin|SEGd_Pin
-                          |SEGe_Pin|SEGf_Pin|SEGg_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LED7_a_Pin|LED7_b_Pin|LED7_c_Pin|LED7_d_Pin
+                          |LED7_e_Pin|LED7_f_Pin|LED7_g_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : LED_RED_Pin EN0_Pin EN1_Pin */
-  GPIO_InitStruct.Pin = LED_RED_Pin|EN0_Pin|EN1_Pin;
+  /*Configure GPIO pins : DOT_Pin LED_RED_Pin EN0_Pin EN1_Pin
+                           EN2_Pin EN3_Pin */
+  GPIO_InitStruct.Pin = DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+                          |EN2_Pin|EN3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SEGa_Pin SEGb_Pin SEGc_Pin SEGd_Pin
-                           SEGe_Pin SEGf_Pin SEGg_Pin */
-  GPIO_InitStruct.Pin = SEGa_Pin|SEGb_Pin|SEGc_Pin|SEGd_Pin
-                          |SEGe_Pin|SEGf_Pin|SEGg_Pin;
+  /*Configure GPIO pins : LED7_a_Pin LED7_b_Pin LED7_c_Pin LED7_d_Pin
+                           LED7_e_Pin LED7_f_Pin LED7_g_Pin */
+  GPIO_InitStruct.Pin = LED7_a_Pin|LED7_b_Pin|LED7_c_Pin|LED7_d_Pin
+                          |LED7_e_Pin|LED7_f_Pin|LED7_g_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
