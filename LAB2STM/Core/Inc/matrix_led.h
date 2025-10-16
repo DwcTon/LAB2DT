@@ -13,6 +13,10 @@
 const int MAX_LED_MATRIX;
 int index_led_matrix;
 uint8_t matrix_buffer[8];
+
+extern int index_row_matrix;
+extern int start_col;
+
 void updateColMatrix(int index);
 void updateLEDBuffer(int index);
 

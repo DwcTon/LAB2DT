@@ -98,6 +98,8 @@ int main(void)
   setTimer3(2000);
   setTimer4(250);
   TIME_7SEG = 250;
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -164,12 +166,21 @@ int main(void)
 	}
 
 	//	Matrix LED
-	if (timer4_flag == 1){
+	if (timer4_flag == 1) {
 		setTimer4(50);
-		if (index_led_matrix >= MAX_LED_MATRIX) index_led_matrix = 0;
-		updateColMatrix(index_led_matrix);
-		updateLEDBuffer(index_led_matrix);
-		index_led_matrix++;
+		if (index_led_matrix >= MAX_LED_MATRIX) {
+			index_led_matrix = 0;
+			start_col++;
+			if (start_col >= MAX_LED_MATRIX) {
+				start_col = 0;
+			}
+			index_row_matrix = start_col;
+		}
+		if (index_row_matrix >= MAX_LED_MATRIX) {
+			index_row_matrix = 0;
+		}
+		updateColMatrix(index_led_matrix++);
+		updateLEDBuffer(index_row_matrix++);
 	}
     /* USER CODE BEGIN 3 */
   }

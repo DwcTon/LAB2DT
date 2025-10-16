@@ -19,6 +19,10 @@ uint8_t matrix_buffer[8] = {0b11111111,
 							0b11000000,
 							0b11111111};
 
+// Variable used for shift the letter
+int index_row_matrix = 0;
+int start_col = 0;
+
 void updateColMatrix(int index) {
 	switch (index) {
 	case 0:
