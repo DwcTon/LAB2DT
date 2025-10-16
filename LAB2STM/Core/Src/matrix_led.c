@@ -19,7 +19,7 @@ uint8_t matrix_buffer[8] = {0b11111111,
 							0b11000000,
 							0b11111111};
 
-void updateColMatrix(int index) {
+void updateLEDMatrix(int index) {
 	switch (index) {
 	case 0:
 		HAL_GPIO_WritePin(GPIOA, ENM1_Pin|ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin|ENM6_Pin|ENM7_Pin, GPIO_PIN_SET);

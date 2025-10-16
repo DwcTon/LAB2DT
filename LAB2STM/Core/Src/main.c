@@ -167,7 +167,7 @@ int main(void)
 	if (timer4_flag == 1){
 		setTimer4(50);
 		if (index_led_matrix >= MAX_LED_MATRIX) index_led_matrix = 0;
-		updateColMatrix(index_led_matrix);
+		updateLEDMatrix(index_led_matrix);
 		updateLEDBuffer(index_led_matrix);
 		index_led_matrix++;
 	}

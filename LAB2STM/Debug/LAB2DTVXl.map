@@ -2394,9 +2394,9 @@ LOAD c:/st/stm32cubeide_1.7.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x00000000080007e0        0xa ./Core/Src/main.o
                 0x00000000080007e0                Error_Handler
  *fill*         0x00000000080007ea        0x2 
- .text.updateColMatrix
+ .text.updateLEDMatrix
                 0x00000000080007ec      0x110 ./Core/Src/matrix_led.o
-                0x00000000080007ec                updateColMatrix
+                0x00000000080007ec                updateLEDMatrix
  .text.updateLEDBuffer
                 0x00000000080008fc      0x10c ./Core/Src/matrix_led.o
                 0x00000000080008fc                updateLEDBuffer
