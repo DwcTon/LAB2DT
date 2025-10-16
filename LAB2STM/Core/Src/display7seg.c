@@ -1,7 +1,7 @@
 /*
  * display7seg.c
  *
- *  Created on: Oct 16, 2025
+ *  Created on: Oct 10, 2025
  *      Author: Đức Toàn
  */
 
