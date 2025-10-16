@@ -105,32 +105,28 @@ int main(void)
     /* USER CODE END WHILE */
 	switch (status) {
 	case SEG0:
-		display7SEG(1);
-		setEnableSignal(status);
+		update7SEG(status);
 		if (timer1_flag == 1) {
 			setTimer1(50);
 			status = SEG1;
 		}
 		break;
 	case SEG1:
-		display7SEG(2);
-		setEnableSignal(status);
+		update7SEG(status);
 		if (timer1_flag == 1) {
 			setTimer1(50);
 			status = SEG2;
 		}
 		break;
 	case SEG2:
-		display7SEG(3);
-		setEnableSignal(status);
+		update7SEG(status);
 		if (timer1_flag == 1) {
 			setTimer1(50);
 			status = SEG3;
 		}
 		break;
 	case SEG3:
-		display7SEG(0);
-		setEnableSignal(status);
+		update7SEG(status);
 		if (timer1_flag == 1) {
 			setTimer1(50);
 			status = SEG0;

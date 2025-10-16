@@ -9,6 +9,13 @@
 #include "global.h"
 #include "display7seg.h"
 
+
+void update7SEG(int index) {
+	if (index < MAX_LED && index >= 0){
+		setEnableSignal(index);
+		display7SEG(led_buffer[index]);
+	}
+}
 //	@brief	Set enable signal for 7-segment LED
 //	@param	Type of 7-segment LED
 void setEnableSignal(int type) {
