@@ -97,56 +97,13 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   // Initial
-  setTimer1(25);
-  setTimer2(100);
-  setTimer3(200);
+  setTimer1(100);
+  setTimer2(25);
+  updateClockBuffer();
   while (1)
   {
     /* USER CODE END WHILE */
-	switch (status) {
-	case SEG0:
-		update7SEG(status);
-		if (timer1_flag == 1) {
-			setTimer1(TIME_7SEG);
-			status = SEG1;
-		}
-		break;
-	case SEG1:
-		update7SEG(status);
-		if (timer1_flag == 1) {
-			setTimer1(TIME_7SEG);
-			status = SEG2;
-		}
-		break;
-	case SEG2:
-		update7SEG(status);
-		if (timer1_flag == 1) {
-			setTimer1(TIME_7SEG);
-			status = SEG3;
-		}
-		break;
-	case SEG3:
-		update7SEG(status);
-		if (timer1_flag == 1) {
-			setTimer1(TIME_7SEG);
-			status = SEG0;
-		}
-		break;
-	default:
-		break;
-	}
 
-	// LED PA5 toggle independently
-	if (timer2_flag == 1) {
-		setTimer2(100);
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-	}
-
-	// LED DOT blink every 2 seconds
-	if (timer3_flag == 1) {
-		setTimer3(200);
-		HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
-	}
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -21,4 +21,8 @@ extern int led_buffer[4];
 
 extern int TIME_7SEG;
 
+extern int hour;
+extern int minute;
+extern int second;
+
 #endif /* INC_GLOBAL_H_ */

@@ -9,13 +9,24 @@
 #include "global.h"
 #include "display7seg.h"
 
+//	@brief	Generate value for led_buffer
+//	@param	None
+void updateClockBuffer() {
+	led_buffer[0] = hour / 10;
+	led_buffer[1] = hour % 10;
+	led_buffer[2] = minute / 10;
+	led_buffer[3] = minute % 10;
+}
 
+//	@brief	Display 7-segment LEDs with led_buffer
+//	@param	Index of led_buffer
 void update7SEG(int index) {
 	if (index < MAX_LED && index >= 0){
 		setEnableSignal(index);
 		display7SEG(led_buffer[index]);
 	}
 }
+
 //	@brief	Set enable signal for 7-segment LED
 //	@param	Type of 7-segment LED
 void setEnableSignal(int type) {
