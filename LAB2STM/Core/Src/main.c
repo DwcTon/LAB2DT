@@ -97,7 +97,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   // Initial
-  setTimer1(50);
+  setTimer1(25);
   setTimer2(100);
   setTimer3(200);
   while (1)
@@ -107,28 +107,28 @@ int main(void)
 	case SEG0:
 		update7SEG(status);
 		if (timer1_flag == 1) {
-			setTimer1(50);
+			setTimer1(TIME_7SEG);
 			status = SEG1;
 		}
 		break;
 	case SEG1:
 		update7SEG(status);
 		if (timer1_flag == 1) {
-			setTimer1(50);
+			setTimer1(TIME_7SEG);
 			status = SEG2;
 		}
 		break;
 	case SEG2:
 		update7SEG(status);
 		if (timer1_flag == 1) {
-			setTimer1(50);
+			setTimer1(TIME_7SEG);
 			status = SEG3;
 		}
 		break;
 	case SEG3:
 		update7SEG(status);
 		if (timer1_flag == 1) {
-			setTimer1(50);
+			setTimer1(TIME_7SEG);
 			status = SEG0;
 		}
 		break;
