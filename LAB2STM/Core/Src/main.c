@@ -93,10 +93,13 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  setTimer1(500);
+  setTimer1(50);
   setTimer2(1000);
   setTimer3(2000);
   setTimer4(250);
+
+  //time cho từng led 7seg
+
   TIME_7SEG = 250;
 
 
@@ -158,6 +161,11 @@ int main(void)
 	default:
 		break;
 	}
+    if (timer2_flag == 1){
+    	second++;
+		HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		setTimer2(1000);
+    }
 
 	// LED DOT blink every 2 seconds
 	if (timer3_flag == 1) {
@@ -167,7 +175,7 @@ int main(void)
 
 	//	Matrix LED
 	if (timer4_flag == 1) {
-		setTimer4(50);
+		setTimer4(100);
 		if (index_led_matrix >= MAX_LED_MATRIX) {
 			index_led_matrix = 0;
 			start_col++;
